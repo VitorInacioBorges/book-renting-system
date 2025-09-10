@@ -1,0 +1,31 @@
+{
+  "name": "book-renting-system",
+  "version": "1.0.0",
+  "description": "book renting system",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitorInacioBorges/book-renting-system.git"
+  },
+  "keywords": [
+    "renting",
+    "book",
+    "api",
+    "backend"
+  ],
+  "author": "vitor inacio borges",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VitorInacioBorges/book-renting-system/issues"
+  },
+  "homepage": "https://github.com/VitorInacioBorges/book-renting-system#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
