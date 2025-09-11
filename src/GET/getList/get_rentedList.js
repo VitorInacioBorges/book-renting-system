@@ -1,4 +1,4 @@
-const { rentedList } = require("../../data/rentedList");
+const { rentedList } = require("../../../data/rentedList");
 
 function get_rentedList(req, res) {
   if (rentedList.length < 1) {

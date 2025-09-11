@@ -6,6 +6,7 @@ function put_student(req, res) {
   } else {
     const id = req.params.id;
     let index = studentList.findIndex((student) => student.id == id);
+
     studentList[index] = {
       id: id,
       name: req.body.name,
@@ -13,6 +14,7 @@ function put_student(req, res) {
       course: req.body.course,
       year: req.body.year,
     };
+
     res.status(200).send({ message: "Student updated succesfully!" });
   }
 }

@@ -1,4 +1,4 @@
-const { studentList } = require("../../data/studentList");
+const { studentList } = require("../../../data/studentList");
 
 function get_studentList(req, res) {
   if (studentList.length < 1) {

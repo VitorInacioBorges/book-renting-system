@@ -1,4 +1,4 @@
-const { bookList } = require("../../data/bookList");
+const { bookList } = require("../../../data/bookList");
 
 function get_bookList(req, res) {
   if (bookList.length < 1) {
