@@ -8,10 +8,10 @@ function put_book(req, res) {
     let index = bookList.findIndex((book) => book.id == id);
     bookList[index] = {
       id: id,
-      name: req.body.name,
-      age: req.body.age,
-      gender: req.body.gender,
-      cpf: req.body.cpf,
+      title: req.body.title,
+      author: req.body.author,
+      year: req.body.year,
+      genre: req.body.genre,
     };
     res.status(200).send({ message: "Book updated succesfully!" });
   }
