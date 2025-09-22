@@ -1,4 +1,5 @@
 const { app, port } = require("./modules/express");
+const mongoose = require('mongoose');
 const delete_book = require("./src/DELETE/delete_book");
 const delete_rent = require("./src/DELETE/delete_rent");
 const delete_student = require("./src/DELETE/delete_student");
@@ -11,6 +12,18 @@ const put_student = require("./src/PUT/put_student");
 const get_book = require("./src/GET/get_book");
 const get_rent = require("./src/GET/get_rent");
 const get_student = require("./src/GET/get_student");
+
+mongoose.connect(
+  "mongodb+srv://Vitor:vitor123@usersdatabase.5qgpsge.mongodb.net/?retryWrites=true&w=majority&appName=UsersDatabase"
+);
+
+mongoose.connection.once("open", () => {
+  console.log("Conectado ao MongoDB!!!");
+});
+
+mongoose.connection?.on('error', (err) => {
+  console.error(`Error to connect - MongoDB: Error: ${err.message}`);
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}!!!`);
