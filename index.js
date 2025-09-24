@@ -1,5 +1,5 @@
 const { app, port } = require("./modules/express");
-const mongoose = require('mongoose');
+const mongoose = require('./modules/mongoose');
 const delete_book = require("./src/DELETE/delete_book");
 const delete_rent = require("./src/DELETE/delete_rent");
 const delete_student = require("./src/DELETE/delete_student");
@@ -13,26 +13,21 @@ const get_book = require("./src/GET/get_book");
 const get_rent = require("./src/GET/get_rent");
 const get_student = require("./src/GET/get_student");
 
-mongoose.connect(
-  "mongodb+srv://Vitor:vitor123@usersdatabase.5qgpsge.mongodb.net/?retryWrites=true&w=majority&appName=UsersDatabase"
-);
-
-mongoose.connection.once("open", () => {
-  console.log("Conectado ao MongoDB!!!");
-});
-
-mongoose.connection?.on('error', (err) => {
-  console.error(`Error to connect - MongoDB: Error: ${err.message}`);
-});
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}!!!`);
-});
-
 // book methods
 app.delete("/book/:id", delete_book);
-app.post("/book", post_book);
+
+app.post("/book", async (req, res) => {
+  const { title, author, year, genre } = req.body;
+  const newBook = await post_book(title, author, year, genre);
+  if(result.success){
+    res.status(200).send({ message: "Livro criado com sucesso! ", book: newBook });
+  } else {
+    res.status(500).send({ message: "Livro NAO CRIADO com sucesso! ", book: newBook });
+  }
+});
+
 app.put("/book/:id", put_book);
+
 app.get("/books", get_book);
 
 // rent methods

@@ -1,17 +1,22 @@
-const { bookList } = require("../../data/bookList");
+const mongoose = require("mongoose");
+const { Book } = require("../../data/schemas/book");
 
-function post_book(req, res) {
-  const newBook = {
-    id: Date.now(),
-    title: req.body.title,
-    author: req.body.author,
-    year: req.body.year,
-    genre: req.body.genre,
-  };
-  bookList.push(newBook);
-  res.status(200).send({
-    message: `ID: ${newBook.id}, Title: ${newBook.title}, Author: ${newBook.author}, Year: ${newBook.year}, Genre: ${newBook.genre}`,
-  });
-}
+const post_book = async (title, author, year, genre) => {
+  try {
+    const newBook = new Book ({
+      title,
+      author,
+      year,
+      genre
+    });
+    const savedBook = await newBook.save();
+    return { success: true, book: savedBook };
 
-module.exports = post_book;
+  } catch (error) {
+    console.error("Erro na criação... ", error);
+
+    return { success: false, error: error.message };
+  }
+};
+
+module.exports = { post_book };
