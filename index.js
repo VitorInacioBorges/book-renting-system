@@ -1,5 +1,5 @@
 const { app, port } = require("./modules/express");
-const mongoose = require('./modules/mongoose');
+const mongoose = require("./modules/mongoose");
 const delete_book = require("./src/DELETE/delete_book");
 const delete_rent = require("./src/DELETE/delete_rent");
 const delete_student = require("./src/DELETE/delete_student");
@@ -19,10 +19,14 @@ app.delete("/book/:id", delete_book);
 app.post("/book", async (req, res) => {
   const { title, author, year, genre } = req.body;
   const newBook = await post_book(title, author, year, genre);
-  if(result.success){
-    res.status(200).send({ message: "Livro criado com sucesso! ", book: newBook });
+  if (result.success) {
+    res
+      .status(200)
+      .send({ message: "Livro criado com sucesso! ", book: newBook });
   } else {
-    res.status(500).send({ message: "Livro NAO CRIADO com sucesso! ", book: newBook });
+    res
+      .status(500)
+      .send({ message: "Livro NAO CRIADO com sucesso! ", book: newBook });
   }
 });
 
@@ -32,7 +36,19 @@ app.get("/books", get_book);
 
 // rent methods
 app.delete("/rent/:id", delete_rent);
-app.post("/rent", post_rent);
+app.post("/rent", async (req, res) => {
+  const { bookId, studentId } = req.body;
+  const newRent = await post_rent(bookId, studentId);
+  if (result.success) {
+    res
+      .status(200)
+      .send({ message: "Aluguel criado com sucesso! ", rent: newRent });
+  } else {
+    res
+      .status(500)
+      .send({ message: "Aluguel NAO CRIADO com sucesso! ", rent: newRent });
+  }
+});
 app.put("/rent/:id", put_rent);
 app.get("/rents", get_rent);
 

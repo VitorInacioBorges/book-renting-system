@@ -1,33 +1,33 @@
-const { rentedList } = require("../../data/rentedList");
+const mongoose = require("../../modules/mongoose");
+const { Rent } = require("../../data/schemas/rent");
 
-const post_rent = async (bookId, studentId, rentDate, returnDate) => {
+const post_rent = async (bookId, studentId) => {
   try {
-    
+    const rentDate = new Date();
+    const returnDate = new Date(rentDate);
+    returnDate.setDate(returnDate.getDate() + 7);
+
+    const newRent = new Rent({
+      bookId,
+      studentId,
+      rentDate, // modelo ISO
+      returnDate, // modelo ISO
+    });
+
+    const savedRent = await newRent.save();
+
+    return {
+      success: true,
+      rent: savedRent,
+    };
   } catch (error) {
+    console.error("Erro na criação... ", error);
 
+    return {
+      success: false,
+      error: error.message,
+    };
   }
-}
+};
 
-/*
-function post_rent(req, res) {
-  const rentDate = new Date(); // nova data atual
-  const returnDate = new Date(rentDate);
-
-  returnDate.setDate(returnDate.getDate() + 7); // dia de devolucao é: data atual + 7 dias
-
-  const newRent = {
-    id: Date.now(),
-    bookId: req.body.bookId,
-    studentId: req.body.studentId,
-    rentDate: rentDate.toISOString, // modelo ISO
-    returnDate: returnDate.toISOString, // modelo ISO
-  };
-
-  rentedList.push(newRent);
-
-  res.status(200).send({
-    message: `ID: ${newRent.id}, Book ID: ${newRent.bookId}, Student ID: ${newRent.studentId}, Rent Date: ${newRent.rentDate}, Return Date: ${newRent.returnDate}`,
-  });
-}
-*/
 module.exports = post_rent;

@@ -1,22 +1,28 @@
-const mongoose = require("mongoose");
+const mongoose = require("../../modules/mongoose");
 const { Book } = require("../../data/schemas/book");
 
 const post_book = async (title, author, year, genre) => {
   try {
-    const newBook = new Book ({
+    const newBook = new Book({
       title,
       author,
       year,
-      genre
+      genre,
     });
     const savedBook = await newBook.save();
-    return { success: true, book: savedBook };
 
+    return {
+      success: true,
+      book: savedBook,
+    };
   } catch (error) {
     console.error("Erro na criação... ", error);
 
-    return { success: false, error: error.message };
+    return {
+      success: false,
+      error: error.message,
+    };
   }
 };
 
-module.exports = { post_book };
+module.exports = post_book;
