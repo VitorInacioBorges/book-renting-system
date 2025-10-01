@@ -1,5 +1,15 @@
-const { rentedList } = require("../../data/rentedList");
+const mongoose = require("../../modules/mongoose");
+const { Rent } = require("../../data/schemas/rent");
 
+const put_rent = async(id, bookId, studentId, rentDate, returnDate) => {
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+/*
 function put_rent(req, res) {
   if (rentedList.length < 1) {
     res.status(200).send({ message: "Empty list!" });
@@ -22,5 +32,5 @@ function put_rent(req, res) {
     res.status(200).send({ message: "Rent updated succesfully!" });
   }
 }
-
+*/
 module.exports = put_rent;

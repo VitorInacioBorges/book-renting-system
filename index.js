@@ -15,7 +15,6 @@ const get_student = require("./src/GET/get_student");
 
 // book methods
 app.delete("/book/:id", delete_book);
-
 app.post("/book", async (req, res) => {
   const { title, author, year, genre } = req.body;
   const newBook = await post_book(title, author, year, genre);
@@ -31,8 +30,11 @@ app.post("/book", async (req, res) => {
 });
 
 app.put("/book/:id", put_book);
+app.get("/books", async(req, res) => {
+  const books = await get_book();
+  res.status(200).send(books);
+});
 
-app.get("/books", get_book);
 
 // rent methods
 app.delete("/rent/:id", delete_rent);
@@ -49,11 +51,32 @@ app.post("/rent", async (req, res) => {
       .send({ message: "Aluguel NAO CRIADO com sucesso! ", rent: newRent });
   }
 });
+
 app.put("/rent/:id", put_rent);
-app.get("/rents", get_rent);
+app.get("/rents", async(req, res) => {
+  const rents = await get_rent();
+  res.status(200).send(rents);
+});
+
 
 // student methods
 app.delete("/student/:id", delete_student);
-app.post("/student", post_student);
+app.post("/student", async (req, res) => {
+  const { name, enrollNum, course, year } = req.body;
+  const newStudent = await post_student(name, enrollNum, course, year);
+  if(result.success) {
+    res
+      .status(200)
+      .send({ message: "Estudante criado! ", student: newStudent });
+  } else {
+    res
+      .status(500)
+      .send({ message: "Estudante NAO CRIADO! ", student: newStudent });
+  }
+});
+
 app.put("/student/:id", put_student);
-app.get("/students", get_student);
+app.get("/students", async(req, res) => {
+  const students = await get_student();
+  res.status(200).send(students);
+});

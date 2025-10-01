@@ -1,5 +1,21 @@
-const { studentList } = require("../../data/studentList");
+const mongoose = require("../../modules/mongoose");
+const { Student } = require("../../data/schemas/student");
 
+const put_student = async(id, name, enrollNum, course, year) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      id,
+      { name, enrollNum, course, year },
+      { new: true, runValidators: true },
+    );
+    return updatedStudent;
+  } catch (error) {
+    console.error("Erro ao atualizar o estudante: ", error.message);
+    throw error;
+  }
+}
+
+/*
 function put_student(req, res) {
   if (studentList.length < 1) {
     res.status(200).send({ message: "Empty list!" });
@@ -18,5 +34,6 @@ function put_student(req, res) {
     res.status(200).send({ message: "Student updated succesfully!" });
   }
 }
+*/
 
 module.exports = put_student;
