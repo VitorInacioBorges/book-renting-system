@@ -1,5 +1,15 @@
-const { rentedList } = require("../../data/rentedList");
+const { Rent } = require("../../data/schemas/rent");
 
+const get_rent = async () => {
+  try {
+    return await Rent.find();
+  } catch (error) {
+    console.error("Erro ao buscar o Aluguel: ", error.message);
+    throw error;
+  }
+}
+
+/*
 function get_rent(req, res) {
   if (rentedList.length < 1) {
     return res.status(200).send({ message: "Empty list!" });
@@ -24,5 +34,5 @@ function get_rent(req, res) {
     res.status(200).send({ results });
   }
 }
-
+*/
 module.exports = get_rent;

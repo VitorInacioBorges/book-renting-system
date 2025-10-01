@@ -1,5 +1,15 @@
-const { bookList } = require("../../data/bookList");
+const { Book } = require("../../data/schemas/book");
 
+const get_book = async () => {
+  try {
+    return await Book.find();
+  } catch (error) {
+    console.log("Erro ao buscar o Livro: ", error.message);
+    throw error;
+  }
+}
+
+/*
 function get_book(req, res) {
   if (bookList.length < 1) {
     return res.status(200).send({ message: "Empty list!" });
@@ -26,5 +36,5 @@ function get_book(req, res) {
     res.status(200).send({ results });
   }
 }
-
+*/
 module.exports = get_book;

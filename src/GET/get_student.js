@@ -1,5 +1,15 @@
-const { studentList } = require("../../data/studentList");
+const { Student } = require("../../data/schemas/student");
 
+const get_student = async () => {
+  try {
+    return await Student.find();
+  } catch (error) {
+    console.error("Error ao buscar o Aluno: ", error.message);
+    throw error;
+  }
+}
+
+/*
 function get_student(req, res) {
   if (studentList.length < 1) {
     return res.status(200).send({ message: "Empty list!" });
@@ -21,5 +31,5 @@ function get_student(req, res) {
     res.status(200).send({ results });
   }
 }
-
+*/
 module.exports = get_student;
