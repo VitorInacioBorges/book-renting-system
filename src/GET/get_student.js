@@ -1,3 +1,4 @@
+const mongoose = require("../../modules/mongoose");
 const { Student } = require("../../data/schemas/student");
 
 const get_student = async () => {

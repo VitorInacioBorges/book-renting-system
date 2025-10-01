@@ -1,3 +1,4 @@
+const mongoose = require("../../modules/mongoose");
 const { Rent } = require("../../data/schemas/rent");
 
 const get_rent = async () => {
