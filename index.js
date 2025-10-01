@@ -29,7 +29,21 @@ app.post("/book", async (req, res) => {
   }
 });
 
-app.put("/book/:id", put_book);
+app.put("/book/:id", async(req, res) => {
+  const { id } = req.params;
+  const { title, author, year, genre } = req.body;
+  const updatedBook = await put_book(id, title, author, year, genre);
+  if(updatedBook){
+    res
+      .status(200)
+      .send({ message: "Livro atualizado com sucesso! ", book: updatedBook });
+  } else {
+    res
+      .status(500)
+      .send({ message: "Livro NAO ATUALIZADO com sucesso! ", book: updatedBook });
+  }
+});
+
 app.get("/books", async(req, res) => {
   const books = await get_book();
   res.status(200).send(books);
@@ -52,7 +66,21 @@ app.post("/rent", async (req, res) => {
   }
 });
 
-app.put("/rent/:id", put_rent);
+app.put("/rent/:id", async(req, res) => {
+  const { id } = req.params;
+  const { bookId, studentId } = req.body;
+  const updatedRent = await put_rent(id, bookId, studentId);
+  if(updatedRent){
+    res
+      .status(200)
+      .send({ message: "Aluguel atualizado com sucesso! ", rent: updatedRent });
+  } else {
+    res
+      .status(500)
+      .send({ message: "Aluguel NAO ATUALIZADO com sucesso! ", rent: updatedRent });
+  }
+});
+
 app.get("/rents", async(req, res) => {
   const rents = await get_rent();
   res.status(200).send(rents);
@@ -75,7 +103,21 @@ app.post("/student", async (req, res) => {
   }
 });
 
-app.put("/student/:id", put_student);
+app.put("/student/:id", async(req, res) => {
+  const { id } = req.params;
+  const { name, enrollNum, course, year } = req.body;
+  const updatedStudent = await put_student(id, name, enrollNum, course, year);
+  if(updatedStudent){
+    res
+      .status(200)
+      .send({ message: "Estudante atualizado com sucesso! ", student: updatedStudent });
+  } else {
+    res
+      .status(500)
+      .send({ message: "Estudante NAO ATUALIZADO com sucesso! ", student: updatedStudent });
+  }
+});
+
 app.get("/students", async(req, res) => {
   const students = await get_student();
   res.status(200).send(students);
