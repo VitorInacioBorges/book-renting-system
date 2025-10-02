@@ -1,5 +1,15 @@
-const { bookList } = require("../../data/bookList");
+const mongoose = require("../../modules/mongoose");
+const { Book } = require("../../data/schemas/book");
 
+const delete_book = async (id) => {
+  try {
+    return await Book.findByIdAndDelete(id);
+  } catch (error) {
+    console.error("Erro ao deletar o livro! ", error.message);
+    throw error;
+  }
+};
+/*
 function delete_book(req, res) {
   const id = req.body.id;
   for (let i = 0; i < bookList.length; i++) {
@@ -15,5 +25,5 @@ function delete_book(req, res) {
     });
   }
 }
-
+*/
 module.exports = delete_book;

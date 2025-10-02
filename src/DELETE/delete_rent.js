@@ -1,5 +1,16 @@
-const { rentedList } = require("../../data/rentedList");
+const mongoose = require("../../modules/mongoose");
+const { Rent } = require("../../data/schemas/rent");
 
+const delete_rent = async (id) => {
+  try {
+    return await Rent.findByIdAndDelete(id);
+  } catch (error) {
+    console.error("Erro ao deletar o aluguel! ", error.message);
+    throw error;
+  }
+};
+
+/*
 function delete_rent(req, res) {
   const id = req.body.id;
   for (let i = 0; i < rentedList.length; i++) {
@@ -15,5 +26,5 @@ function delete_rent(req, res) {
     });
   }
 }
-
+*/
 module.exports = delete_rent;
