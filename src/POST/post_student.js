@@ -1,5 +1,5 @@
 const mongoose = require("../../modules/mongoose");
-const { Student } = require("../../data/schemas/student");
+const { Student } = require("../../models/student");
 
 const post_student = async (name, enrollNum, course, year) => {
   try {

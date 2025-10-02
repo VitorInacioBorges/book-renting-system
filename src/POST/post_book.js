@@ -1,5 +1,5 @@
 const mongoose = require("../../modules/mongoose");
-const { Book } = require("../../data/schemas/book");
+const { Book } = require("../../models/book");
 
 const post_book = async (title, author, year, genre) => {
   try {

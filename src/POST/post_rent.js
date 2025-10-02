@@ -1,5 +1,5 @@
 const mongoose = require("../../modules/mongoose");
-const { Rent } = require("../../data/schemas/rent");
+const { Rent } = require("../../models/rent");
 
 const post_rent = async (bookId, studentId) => {
   try {

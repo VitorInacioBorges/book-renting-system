@@ -1,39 +1,18 @@
 const mongoose = require("../../modules/mongoose");
-const { Student } = require("../../data/schemas/student");
+const { Student } = require("../../models/student");
 
-const put_student = async(id, name, enrollNum, course, year) => {
+const put_student = async (id, name, enrollNum, course, year) => {
   try {
     const updatedStudent = await Student.findByIdAndUpdate(
       id,
       { name, enrollNum, course, year },
-      { new: true, runValidators: true },
+      { new: true, runValidators: true }
     );
     return updatedStudent;
   } catch (error) {
     console.error("Erro ao atualizar o estudante: ", error.message);
     throw error;
   }
-}
-
-/*
-function put_student(req, res) {
-  if (studentList.length < 1) {
-    res.status(200).send({ message: "Empty list!" });
-  } else {
-    const id = req.params.id;
-    let index = studentList.findIndex((student) => student.id == id);
-
-    studentList[index] = {
-      id: id,
-      name: req.body.name,
-      enrollNum: req.body.enrollNum,
-      course: req.body.course,
-      year: req.body.year,
-    };
-
-    res.status(200).send({ message: "Student updated succesfully!" });
-  }
-}
-*/
+};
 
 module.exports = put_student;
