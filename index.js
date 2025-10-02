@@ -14,7 +14,20 @@ const get_rent = require("./src/GET/get_rent");
 const get_student = require("./src/GET/get_student");
 
 // book methods
-app.delete("/book/:id", delete_book);
+app.delete("/book/:id", async (req, res) => {
+  const { id } = req.params;
+  const deletedBook = await delete_book(id);
+  if (deletedBook) {
+    res
+      .status(200)
+      .send({ message: "Livro deletado com sucesso! ", book: deletedBook });
+  } else {
+    res
+      .status(500)
+      .send({ message: "Livro NAO DELETADO com sucesso! ", book: deletedBook });
+  }
+});
+
 app.post("/book", async (req, res) => {
   const { title, author, year, genre } = req.body;
   const newBook = await post_book(title, author, year, genre);
@@ -29,29 +42,43 @@ app.post("/book", async (req, res) => {
   }
 });
 
-app.put("/book/:id", async(req, res) => {
+app.put("/book/:id", async (req, res) => {
   const { id } = req.params;
   const { title, author, year, genre } = req.body;
   const updatedBook = await put_book(id, title, author, year, genre);
-  if(updatedBook){
+  if (updatedBook) {
     res
       .status(200)
       .send({ message: "Livro atualizado com sucesso! ", book: updatedBook });
   } else {
-    res
-      .status(500)
-      .send({ message: "Livro NAO ATUALIZADO com sucesso! ", book: updatedBook });
+    res.status(500).send({
+      message: "Livro NAO ATUALIZADO com sucesso! ",
+      book: updatedBook,
+    });
   }
 });
 
-app.get("/books", async(req, res) => {
+app.get("/books", async (req, res) => {
   const books = await get_book();
   res.status(200).send(books);
 });
 
-
 // rent methods
-app.delete("/rent/:id", delete_rent);
+app.delete("/rent/:id", async (req, res) => {
+  const { id } = req.params;
+  const deletedRent = await delete_rent(id);
+  if (deletedRent) {
+    res
+      .status(200)
+      .send({ message: "Aluguel deletado com sucesso! ", rent: deletedRent });
+  } else {
+    res.status(500).send({
+      message: "Aluguel NAO DELETADO com sucesso! ",
+      rent: deletedRent,
+    });
+  }
+});
+
 app.post("/rent", async (req, res) => {
   const { bookId, studentId } = req.body;
   const newRent = await post_rent(bookId, studentId);
@@ -66,33 +93,48 @@ app.post("/rent", async (req, res) => {
   }
 });
 
-app.put("/rent/:id", async(req, res) => {
+app.put("/rent/:id", async (req, res) => {
   const { id } = req.params;
   const { bookId, studentId } = req.body;
   const updatedRent = await put_rent(id, bookId, studentId);
-  if(updatedRent){
+  if (updatedRent) {
     res
       .status(200)
       .send({ message: "Aluguel atualizado com sucesso! ", rent: updatedRent });
   } else {
-    res
-      .status(500)
-      .send({ message: "Aluguel NAO ATUALIZADO com sucesso! ", rent: updatedRent });
+    res.status(500).send({
+      message: "Aluguel NAO ATUALIZADO com sucesso! ",
+      rent: updatedRent,
+    });
   }
 });
 
-app.get("/rents", async(req, res) => {
+app.get("/rents", async (req, res) => {
   const rents = await get_rent();
   res.status(200).send(rents);
 });
 
-
 // student methods
-app.delete("/student/:id", delete_student);
+app.delete("/student/:id", async (res, res) => {
+  const { id } = req.params;
+  const deletedStudent = await delete_student(id);
+  if (deletedStudent) {
+    res.status(200).send({
+      message: "Estudante deletado com sucesso! ",
+      student: deletedStudent,
+    });
+  } else {
+    res.status(500).send({
+      message: "Estudante NAO DELETADO com sucesso! ",
+      student: deletedStudent,
+    });
+  }
+});
+
 app.post("/student", async (req, res) => {
   const { name, enrollNum, course, year } = req.body;
   const newStudent = await post_student(name, enrollNum, course, year);
-  if(result.success) {
+  if (result.success) {
     res
       .status(200)
       .send({ message: "Estudante criado! ", student: newStudent });
@@ -103,22 +145,24 @@ app.post("/student", async (req, res) => {
   }
 });
 
-app.put("/student/:id", async(req, res) => {
+app.put("/student/:id", async (req, res) => {
   const { id } = req.params;
   const { name, enrollNum, course, year } = req.body;
   const updatedStudent = await put_student(id, name, enrollNum, course, year);
-  if(updatedStudent){
-    res
-      .status(200)
-      .send({ message: "Estudante atualizado com sucesso! ", student: updatedStudent });
+  if (updatedStudent) {
+    res.status(200).send({
+      message: "Estudante atualizado com sucesso! ",
+      student: updatedStudent,
+    });
   } else {
-    res
-      .status(500)
-      .send({ message: "Estudante NAO ATUALIZADO com sucesso! ", student: updatedStudent });
+    res.status(500).send({
+      message: "Estudante NAO ATUALIZADO com sucesso! ",
+      student: updatedStudent,
+    });
   }
 });
 
-app.get("/students", async(req, res) => {
+app.get("/students", async (req, res) => {
   const students = await get_student();
   res.status(200).send(students);
 });
